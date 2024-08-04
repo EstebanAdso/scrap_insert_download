@@ -1,4 +1,3 @@
-// config.js
 let sqlConfig = {
     user: '',
     password: '',
