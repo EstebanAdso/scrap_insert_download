@@ -13,8 +13,8 @@ let sqlConfig = {
         encrypt: true,
         trustServerCertificate: true
     },
-    connectionTimeout: 60000, // Aumenta el tiempo de espera de conexión
-    requestTimeout: 60000 // Aumenta el tiempo de espera de solicitud
+    connectionTimeout: 120000, // Aumenta el tiempo de espera de conexión
+    requestTimeout: 120000 // Aumenta el tiempo de espera de solicitud
 };
 
 export function updateConfig(newConfig) {
