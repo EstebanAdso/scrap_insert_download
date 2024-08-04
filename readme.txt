@@ -2,6 +2,7 @@ npm init -y -- para inicializar el servidor nodeJs
 npm i express --para instalar express
 npm install axios cheerio mssql
 npm install mssql - para conectarse y ejecutar consultas en sql server
+npm install dotenv
 crear sqlconfig.js para almacenar los datos de la conexión
 En el package.json usar "type": "module",
 npm install -- para instalar todas las dependencias requeridas.
