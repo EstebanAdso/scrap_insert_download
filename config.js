@@ -11,8 +11,8 @@ let sqlConfig = {
         idleTimeoutMillis: 30000
     },
     options: {
-        encrypt: false,
-        trustServerCertificate: true
+        encrypt: true, // Mantén el cifrado activado para mayor seguridad
+        trustServerCertificate: true // Confía en el certificado sin validarlo para evitar problemas de validación de certificados
     }
     // connectionTimeout: 30000, // Aumenta el tiempo de espera de conexión
     // requestTimeout: 30000 // Aumenta el tiempo de espera de solicitud
