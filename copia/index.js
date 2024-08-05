@@ -1,5 +1,5 @@
 import axios from 'axios';                       // Importa la biblioteca Axios para realizar peticiones HTTP
-import { load } from 'cheerio';                  // Importa la función load de Cheerio para analizar el HTML
+import cheerio from 'cheerio';                   // Importa Cheerio para analizar y manipular el HTML
 import sql from 'mssql';                         // Importa el módulo mssql para conectar y ejecutar consultas en SQL Server
 import { getConfig } from './config.js';         // Importa la función getConfig para obtener la configuración de conexión SQL
 import fs from 'fs';                             // Importa el módulo fs para manejar operaciones de archivos
@@ -12,11 +12,11 @@ const __dirname = path.dirname(__filename);
 
 // Función para obtener datos de la página web y generar un script SQL
 export async function getDataFromWebPage() {
-    let pool;           // Variable para manejar la conexión a SQL Server
+    let pool; // Variable para manejar la conexión a SQL Server
     let sqlScript = ''; // Variable para almacenar el script SQL generado
     try {
         const { data } = await axios.get('https://www.sqlserverversions.com/');
-        const $ = load(data); // Carga el HTML de la página usando Cheerio
+        const $ = cheerio.load(data); // Carga el HTML de la página usando Cheerio
 
         const tables = $('div.oxa');
         let versionsData = {};
