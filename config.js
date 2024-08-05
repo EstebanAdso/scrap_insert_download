@@ -1,3 +1,4 @@
+// config.js
 let sqlConfig = {
     user: '',
     password: '',
@@ -10,11 +11,11 @@ let sqlConfig = {
         idleTimeoutMillis: 30000
     },
     options: {
-        encrypt: true,
+        encrypt: false,
         trustServerCertificate: true
-    },
-    connectionTimeout: 120000, // Aumenta el tiempo de espera de conexión
-    requestTimeout: 120000 // Aumenta el tiempo de espera de solicitud
+    }
+    // connectionTimeout: 30000, // Aumenta el tiempo de espera de conexión
+    // requestTimeout: 30000 // Aumenta el tiempo de espera de solicitud
 };
 
 export function updateConfig(newConfig) {
