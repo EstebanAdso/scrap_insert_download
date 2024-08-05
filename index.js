@@ -1,22 +1,23 @@
-import axios from 'axios';
-import cheerio from 'cheerio';
-import sql from 'mssql';
-import { getConfig } from './config.js';
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import axios from 'axios';                       // Importa la biblioteca Axios para realizar peticiones HTTP
+import cheerio from 'cheerio';                   // Importa Cheerio para analizar y manipular el HTML
+import sql from 'mssql';                         // Importa el módulo mssql para conectar y ejecutar consultas en SQL Server
+import { getConfig } from './config.js';         // Importa la función getConfig para obtener la configuración de conexión SQL
+import fs from 'fs';                             // Importa el módulo fs para manejar operaciones de archivos
+import path from 'path';                         // Importa el módulo path para manejar rutas de archivos
+import { fileURLToPath } from 'url';             // Importa fileURLToPath para convertir URLs a rutas de archivos
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Función para obtener datos de la página web y generar un script SQL
 export async function getDataFromWebPage() {
-    let pool;
-    let sqlScript = '';
+    let pool; // Variable para manejar la conexión a SQL Server
+    let sqlScript = ''; // Variable para almacenar el script SQL generado
     try {
         const { data } = await axios.get('https://www.sqlserverversions.com/');
-        const $ = cheerio.load(data);
+        const $ = cheerio.load(data); // Carga el HTML de la página usando Cheerio
 
-        // Analizar el HTML usando cheerio
         const tables = $('div.oxa');
         let versionsData = {};
 
@@ -30,9 +31,9 @@ export async function getDataFromWebPage() {
 
         tables.each((index, table) => {
             if (index >= 1 && index <= 5) {
-                const versionYear = versionMapping[index];
-                let data = [];
-                let stopConditionMet = false;
+                const versionYear = versionMapping[index]; // Obtiene el año de versión correspondiente
+                let data = [];                             // Array para almacenar datos extraídos
+                let stopConditionMet = false;              // Variable para determinar si se ha alcanzado la condición de parada
 
                 $(table).find('table.tbl tbody tr').each((_, row) => {
                     if (stopConditionMet) return;
@@ -50,7 +51,8 @@ export async function getDataFromWebPage() {
                             kbDescription: kbDescription,
                             releaseDate: releaseDate
                         });
-
+                        
+                        // Verifica si se ha alcanzado la condición de parada y detiene la iteración si es necesario
                         if ((index === 1 && build === '16.0.100.4') ||
                             (index === 2 && build === '15.0.1000.34') ||
                             (index === 3 && build === '14.0.1.246') ||
@@ -66,7 +68,8 @@ export async function getDataFromWebPage() {
             }
         });
 
-        console.log("Datos obtenidos de la página:", versionsData);
+        //console.log("Datos obtenidos de la página:", versionsData); // Muestra los datos extraídos en la consola
+
 
         // Conectar a SQL Server y ejecutar los comandos SQL
         const sqlConfig = getConfig();
@@ -109,6 +112,8 @@ export async function getDataFromWebPage() {
                 
                 sqlScript += `${createTableScript}\n${insertOrUpdateScript}\n`;
                 
+
+                // Ejecuta los scripts SQL en la base de datos
                 await pool.request().query(createTableScript);
                 await pool.request().query(insertOrUpdateScript);
             }
@@ -123,7 +128,7 @@ export async function getDataFromWebPage() {
         return { success: false, error: error.message };
     } finally {
         if (pool) {
-            await pool.close();
+            await pool.close(); // Cierra la conexión a SQL Server si está abierta
         }
     }
 }

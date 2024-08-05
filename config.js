@@ -11,14 +11,14 @@ let sqlConfig = {
         idleTimeoutMillis: 30000
     },
     options: {
-        encrypt: true, // Mantén el cifrado activado para mayor seguridad
-        trustServerCertificate: true // Confía en el certificado sin validarlo para evitar problemas de validación de certificados
+        encrypt: true,               // cifrado activado para mayor seguridad
+        trustServerCertificate: true // Confía en el certificado 
     }
-    // connectionTimeout: 30000, // Aumenta el tiempo de espera de conexión
-    // requestTimeout: 30000 // Aumenta el tiempo de espera de solicitud
 };
 
+// Función para actualizar la configuración de conexión
 export function updateConfig(newConfig) {
+    // Verifica que todos los campos necesarios estén presentes
     if (!newConfig.server || !newConfig.database || !newConfig.user || !newConfig.password) {
         throw new Error('Todos los campos de configuración son requeridos');
     }
@@ -26,7 +26,9 @@ export function updateConfig(newConfig) {
     console.log('Configuración actualizada');
 }
 
+// Función para obtener la configuración actual
 export function getConfig() {
+    // Verifica que la configuración esté completa
     if (!sqlConfig.server || !sqlConfig.database || !sqlConfig.user || !sqlConfig.password) {
         throw new Error('La configuración no es válida. Asegúrate de llamar a updateConfig primero.');
     }
