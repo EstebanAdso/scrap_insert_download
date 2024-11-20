@@ -52,33 +52,3 @@ sistema operativo.
 Se utiliza para obtener el nombre del archivo actual (__filename) y el directorio del archivo (__dirname) en un 
 entorno de módulos ES. Esto es útil para construir rutas relativas basadas en la ubicación del archivo.
 
-
-
-Crear un archivo de configuración:
-Crea un archivo sqlconfig.js para almacenar los datos de conexión a la base de datos SQL Server.
-
-Actualizar package.json:
-Asegúrate de añadir "type": "module" en el package.json para habilitar el uso de módulos ES6.
-
-
-
-
-Para que la conexión sea exitosa, se necesita asegurar:
-
-SQL Server está en ejecución: El servicio de SQL Server debe estar en ejecución en la máquina donde está instalado.
-Puedes verificar esto en el Administrador de Servicios de Windows bajo el nombre "SQL Server (MSSQLSERVER)" o el
-nombre de la instancia que estás utilizando.
-
-SQL Server está configurado para aceptar conexiones remotas: Asegúrate de que tu servidor SQL esté configurado para 
-aceptar conexiones TCP/IP. Esto puede ser configurado en el SQL Server Configuration Manager.
-https://www.youtube.com/watch?v=wVNPjDeZOhA
-
-Puerta de enlace del cortafuegos abierta: Si tienes un cortafuegos, asegúrate de que esté permitiendo conexiones al 
-puerto 1433 (u otro puerto que esté utilizando SQL Server).
-https://www.youtube.com/watch?v=wVNPjDeZOhA
-
-Credenciales correctas: Asegúrate de estar utilizando las credenciales correctas (nombre de usuario y contraseña)
- en tu configuración de conexión.
-
-Nombre del servidor correcto: Asegúrate de que el nombre del servidor y la instancia estén correctos en tu configuración de
- conexión (server: 'DESKTOP-37SGVP0').
